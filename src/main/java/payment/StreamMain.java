@@ -2,6 +2,7 @@ package payment;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
@@ -61,9 +62,31 @@ public class StreamMain {
         /*Stream.iterate(1, i -> i < 10000, i -> i * 3)
                 .forEach(i -> System.out.println(i + ", "));*/
 
-        client1.getBillPayments().stream()
-                .filter(b->b.isPaid())
-                .forEach(b-> System.out.println(b));
+        //client1.getBillPayments().stream()
+        //        .filter(b->b.isPaid())
+        //        .forEach(b-> System.out.println(b));
+
+        //client1.getBillPayments()
+        //        .stream()
+        //        .filter(b -> b.getDue().isBefore(LocalDate.of(2023, 10, 31)))
+        //        .filter(b -> b.getAmountOfUsage().compareTo(BigDecimal.valueOf(110)) < 0)
+        //        .forEach(b -> System.out.println(b));
+
+        /*client1.getBillPayments()
+                .stream()
+                .sorted((b1, b2) -> b1.getMediaTypeName().compareTo(b2.getMediaTypeName()))
+                .forEach(b1 -> System.out.println(b1));*/
+
+        /*client1.getBillPayments()
+                .stream()
+                .map(b-> b.getMediaTypeName() + ": " + b.getDue().toString())
+                .forEach(b -> System.out.println(b))*/;
+
+        client1.getBillPayments()
+                .stream()
+                .filter(b -> b.isOverdue())
+                .map(b-> b.getMediaTypeName() + " : " + b.getPaymentAmount())
+                .forEach(b -> System.out.println(b));
 
     }
 }
